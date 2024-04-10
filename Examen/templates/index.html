@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analizador Lexico(Sintactico)</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Analizador que Analiza </h1>
+
+        <div class="inputs-container">
+            <form id="formulario" action="/analizar" method="post">
+                <label for="datos">Ingrese los datos:</label><br>
+                <textarea id="datos" name="datos" rows="5" cols="50">{{ datos }}</textarea><br>
+                <!-- Agregar campo oculto para enviar el contenido actual del cuadro de texto léxico -->
+                <input type="hidden" name="resultado_lexico" value="{{ resultado_lexico }}">
+                <button type="submit" name="accion" value="lexico">Analizar Léxico</button>
+                <button type="submit" name="accion" value="sintactico">Analizar Sintáctico</button>
+                <button type="button" onclick="limpiarDatos()">Limpiar Datos</button>
+            </form>
+        </div>
+
+        <div class="analizadores">
+            <div class="analizador-lexico">
+                <h2>Analizador Lexico</h2>
+                <textarea id="lexico" name="lexico" rows="5" cols="30" placeholder="Resultado Lexico" readonly="">
+                    {{ resultado_lexico }}
+                </textarea>
+            </div>            
+
+            <div class="analizador-sintactico">
+                <h2>Analizador Sintáctico</h2>
+                <textarea id="sintactico" name="sintactico" rows="5" cols="30" placeholder="Resultado Sintáctico" readonly="">
+                    {{ resultado_sintactico }}
+                </textarea>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function limpiarDatos() {
+            document.getElementById('datos').value = '';
+            document.getElementById('lexico').value = '';
+            document.getElementById('sintactico').value = '';
+        }
+    </script>
+
+    <script>
+        function cargarArchivo() {
+            const archivoSeleccionado = document.getElementById('archivo').files[0];
+            const lector = new FileReader();
+
+            lector.onload = function(evento) {
+            const contenido = evento.target.result;
+            document.getElementById('datos').value = contenido;
+            };
+
+            lector.readAsText(archivoSeleccionado);
+        }
+    </script>
+
+    
+</body>
+</html>
+
+
+
+
+
+
+
+
